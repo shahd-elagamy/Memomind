@@ -1,0 +1,39 @@
+{% extends "base_auth.html" %}
+{% block page_title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h1>👋 Welcome Back</h1>
+
+        <p>Sign in to your MemoMind workspace.</p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="primary-btn">
+                Login
+            </button>
+
+        </form>
+
+        <p class="switch-link">
+            Don't have an account?
+            <a href="{% url 'register' %}">
+                Register
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

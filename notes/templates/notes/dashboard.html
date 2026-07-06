@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h2>Welcome back, {{ request.user.username }}</h2>
+
+    <p>Your AI-powered second brain.</p>
+
+</div>
+
+<br>
+
+<div class="stats">
+
+    <div class="card stat-card">
+        <h3>📚 Notes</h3>
+        <h1>{{ notes_count }}</h1>
+    </div>
+
+    <div class="card stat-card">
+        <h3>🔎 AI Searches</h3>
+        <h1>{{ searches_count }}</h1>
+    </div>
+
+    
+
+    <div class="card stat-card">
+        <h3>🏷 Categories</h3>
+        <h1>{{ categories_count }}</h1>
+    </div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+    <h2>📝 Recent Notes</h2>
+
+    <br>
+
+    {% if notes %}
+
+        {% for note in notes %}
+
+        <div class="note-item">
+
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+
+                <h3>{{ note.title }}</h3>
+
+                <span class="tag tag-{{ note.category|lower }}">
+                    {{ note.category }}
+                </span>
+
+            </div>
+
+            <p>{{ note.content|truncatewords:20 }}</p>
+
+            <small style="color:#888;">
+                📅 {{ note.created_at|date:"M d, Y" }}
+            </small>
+
+        </div>
+
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+
+        {% endfor %}
+
+    {% else %}
+
+        <div style="text-align:center;padding:40px;">
+
+            <h3>📭 No notes yet</h3>
+
+            <p>Create your first note to start building your AI Second Brain.</p>
+
+            <br>
+
+            <a class="btn" href="{% url 'add_note' %}">
+                ➕ Add Note
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

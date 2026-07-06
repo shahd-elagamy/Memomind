@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Edit Note
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <h1>✏ Edit Note</h1>
+    <p>Update your note.</p>
+</div>
+
+<form method="POST" class="note-form">
+    {% csrf_token %}
+
+    <label>Title</label>
+    <input
+        type="text"
+        name="title"
+        value="{{ note.title }}"
+        required>
+
+    <label>Content</label>
+    <textarea
+        name="content"
+        rows="8"
+        required>{{ note.content }}</textarea>
+
+    <label>Category</label>
+
+    <select name="category">
+
+        <option value="AI" {% if note.category == "AI" %}selected{% endif %}>AI</option>
+
+        <option value="ML" {% if note.category == "ML" %}selected{% endif %}>Machine Learning</option>
+
+        <option value="DL" {% if note.category == "DL" %}selected{% endif %}>Deep Learning</option>
+
+        <option value="NLP" {% if note.category == "NLP" %}selected{% endif %}>NLP</option>
+
+        <option value="CV" {% if note.category == "CV" %}selected{% endif %}>Computer Vision</option>
+
+        <option value="Programming" {% if note.category == "Programming" %}selected{% endif %}>Programming</option>
+
+        <option value="Other" {% if note.category == "Other" %}selected{% endif %}>Other</option>
+
+    </select>
+
+    <br><br>
+
+    <button class="primary-btn">
+        💾 Save Changes
+    </button>
+
+</form>
+
+{% endblock %}

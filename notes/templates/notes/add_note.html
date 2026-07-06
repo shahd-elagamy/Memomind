@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+Add Note
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <input
+        type="text"
+        name="title"
+        placeholder="Note title">
+    <br><br>
+
+    <textarea
+        name="content"
+        rows="10"
+        placeholder="Write your note..."></textarea>
+        <br><br>
+<div class="form-group">
+
+<label>Category</label>
+<select name="category">
+
+    <option value="AI">AI</option>
+    <option value="ML">Machine Learning</option>
+    <option value="DL">Deep Learning</option>
+    <option value="NLP">NLP</option>
+    <option value="CV">Computer Vision</option>
+    <option value="Programming">Programming</option>
+    <option value="Other">Other</option>
+
+</select>
+</div>
+<button type="button" id="suggestBtn" class="ai-btn">
+    ✨ Suggest Category
+</button>
+   
+
+    <br><br>
+
+    <button type="submit">
+
+        Save Note
+
+    </button>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+My Notes
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+<h1>📚 My Notes</h1>
+
+<p>All your ideas in one place.</p>
+
+</div>
+
+<form method="GET">
+
+<div class="search-row">
+
+<input
+
+type="text"
+
+name="q"
+
+value="{{ query|default:'' }}"
+
+placeholder="Search notes...">
+
+<button>
+
+🔍
+
+</button>
+
+</div>
+
+</form>
+
+<br>
+
+<div class="notes-grid">
+
+{% for note in notes %}
+
+<div class="card note-card" id="note-{{ note.id }}">
+
+<h2>
+
+{{ note.title }}
+
+</h2>
+
+<p>
+
+{{ note.content|truncatewords:25 }}
+
+</p>
+
+<div class="date">
+
+📅 {{ note.created_at|date:"M d, Y" }}
+
+</div>
+<span class="tag tag-{{ note.category|lower }}">
+    {{ note.category }}
+</span>
+<div class="actions">
+
+<a href="{% url 'view_note' note.id %}">
+    👁 View
+</a>
+
+<a href="{% url 'edit_note' note.id %}">
+    ✏ Edit
+</a>
+
+
+<button
+class="delete-btn"onclick="openDeleteModal({{ note.id }})">
+
+🗑 Delete
+
+</button>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="card">
+
+No Notes Found
+
+</div>
+
+{% endfor %}
+
+</div>
+<div id="deleteModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>🗑 Delete Note</h2>
+
+        <p>
+
+            Are you sure?
+
+        </p>
+
+        <div class="modal-buttons">
+
+            <button onclick="closeDeleteModal()">
+
+                Cancel
+
+            </button>
+
+            <button
+            class="danger"
+            onclick="deleteNote()">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="toast" class="toast">
+    ✅ Note deleted successfully
+</div>
+{% endblock %}

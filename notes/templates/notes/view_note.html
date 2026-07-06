@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+View Note
+{% endblock %}
+
+{% block content %}
+
+<div class="note-view">
+
+<h1>{{ note.title }}</h1>
+
+<span class="tag tag-{{ note.category|lower }}">
+{{ note.category }}
+</span>
+
+<p class="date">
+📅 {{ note.created_at|date:"F d, Y" }}
+</p>
+
+<div class="note-content">
+
+{{ note.content|linebreaks }}
+
+</div>
+
+<div class="actions">
+
+<a class="btn" href="{% url 'edit_note' note.id %}">
+✏ Edit
+</a>
+<button onclick="generateSummary({{ note.id }})">
+
+    ✨ AI Summary
+
+</button>
+
+<div id="summary-box"></div>
+
+</div>
+
+</div>
+
+{% endblock %}

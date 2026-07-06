@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+<h1>🔎 AI Notes Search</h1>
+
+<div style="display:flex; gap:10px;">
+    <input type="text" id="query" placeholder="Search your notes...">
+    <button onclick="search()">Search</button>
+</div>
+
+<div id="results" style="margin-top:20px;"></div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+async function search() {
+    let q = document.getElementById("query").value;
+    let resDiv = document.getElementById("results");
+
+    resDiv.innerHTML = "Searching...";
+
+    let response = await fetch(`/notes/api/search/?q=${q}`);
+    let data = await response.json();
+
+    resDiv.innerHTML = "";
+
+    data.results.forEach(r => {
+        resDiv.innerHTML += `
+            <div class="card">
+                <h3>${r.title}</h3>
+                <p>${r.content}</p>
+                <small>Score: ${r.score.toFixed(2)}</small>
+            </div>
+        `;
+    });
+}
+</script>
+{% endblock %}

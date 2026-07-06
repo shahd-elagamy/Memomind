@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>{% block title %}MemoMind{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <script defer src="{% static 'js/app.js' %}"></script>
+
+</head>
+
+<body>
+{% load static %}
+
+
+
+<div class="layout">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <img src="{% static 'images/logo.png' %}" alt="logo">
+
+            <div>
+
+                <h2>MemoMind</h2>
+
+                <span>Your AI Second Brain</span>
+
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="{% url 'dashboard' %}">🏠 Dashboard</a>
+
+            <a href="{% url 'add_note' %}">➕ Add Note</a>
+
+            <a href="{% url 'search' %}">🔎 AI Search</a>
+
+            <a href="{% url 'my_notes' %}">📚 My Notes</a>
+
+            <a href="{% url 'settings' %}">⚙ Settings</a>
+
+        </nav>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main>
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>{% block page_title %}{% endblock %}</h1>
+
+            </div>
+
+           <div class="user-menu">
+<button id="theme-toggle" class="theme-btn">
+    🌙
+</button>
+    {% if user.is_authenticated %}
+
+        <span class="username">
+            👤 {{ user.username }}
+        </span>
+        
+
+        <a href="{% url 'logout' %}" class="nav-btn logout-btn">
+            Logout
+        </a>
+
+    {% else %}
+
+        <a href="{% url 'login' %}" class="nav-btn">
+            Login
+        </a>
+
+        <a href="{% url 'register' %}" class="nav-btn register-btn">
+            Sign Up
+        </a>
+
+    {% endif %}
+
+</div>
+
+        </header>
+
+        <section class="content">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </section>
+
+    </main>
+
+</div>
+{% block extra_js %}
+{% endblock %}
+</body>
+
+</html>
